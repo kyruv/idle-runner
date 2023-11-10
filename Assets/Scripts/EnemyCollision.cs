@@ -6,7 +6,6 @@ public class EnemyCollision : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.ToString());
         if (collision.collider.CompareTag("bullet"))
         {
             Destroy(collision.gameObject);
