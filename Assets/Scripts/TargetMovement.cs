@@ -9,13 +9,10 @@ public class TargetMovement : MonoBehaviour
     [SerializeField] private GameObject target;
 
     public float speed = 1.75f;
-    private Rigidbody2D rb;
 
     void Start()
     {
         target = GameObject.Find("Player");
-        rb = GetComponent<Rigidbody2D>();
-
     }
 
     public void SetTarget(GameObject o)
@@ -27,6 +24,6 @@ public class TargetMovement : MonoBehaviour
     {
         Vector3 diff = target.transform.position - transform.position;
         diff.Normalize();
-        rb.MovePosition(transform.position + (diff * speed * Time.fixedDeltaTime));
+        transform.Translate(diff * speed * Time.fixedDeltaTime, Space.World);
     }
 }

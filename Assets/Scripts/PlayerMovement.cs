@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 2f;
     public float dash_speed = 25f;
     public float dash_duration = .5f;
-
+    public float dash_cooldown = 2f;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -22,9 +22,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && dash_timer <= 0)
+        if (Input.GetKeyDown(KeyCode.Space) && dash_timer <= (-dash_cooldown + dash_duration))
         {
             dash_timer = dash_duration;
+            animator.SetBool("dashing", true);
         }
     }
 
@@ -47,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f);
         if (movement == Vector3.zero)
         {
-            Debug.Log("HERE");
             animator.SetBool("walking", false);
             return;
         }
@@ -58,11 +58,16 @@ public class PlayerMovement : MonoBehaviour
         if (dash_timer > 0)
         {
             transform.Translate(movement * dash_speed * Time.fixedDeltaTime, Space.World);
-            dash_timer -= Time.fixedDeltaTime;
         }
         else
         {
+            animator.SetBool("dashing", false);
             transform.Translate(movement * speed * Time.fixedDeltaTime, Space.World);
+        }
+
+        if (dash_timer > -dash_cooldown + dash_duration)
+        {
+            dash_timer -= Time.fixedDeltaTime;
         }
 
     }

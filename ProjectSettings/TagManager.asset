@@ -6,6 +6,7 @@ TagManager:
   tags:
   - bullet
   - player
+  - map
   layers:
   - Default
   - TransparentFX

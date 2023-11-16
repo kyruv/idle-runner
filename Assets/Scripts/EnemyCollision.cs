@@ -9,11 +9,13 @@ public class EnemyCollision : MonoBehaviour
         if (collision.collider.CompareTag("bullet"))
         {
             Destroy(collision.gameObject);
-            Destroy(gameObject);
+            GetComponent<Health>().TakeDamage(.5f);
         }
         else if (collision.collider.CompareTag("player"))
         {
-            Destroy(collision.gameObject);
+            collision.collider.gameObject.GetComponent<Health>().TakeDamage(1);
+            Debug.Log("Hit Player");
+            Destroy(gameObject);
         }
     }
 }
