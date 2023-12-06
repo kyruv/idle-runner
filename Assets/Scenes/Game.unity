@@ -120247,7 +120247,7 @@ MonoBehaviour:
   gunLevel: {fileID: 687579168}
   dexterityLevel: {fileID: 526666552}
   enduranceLevel: {fileID: 1769279231}
-  gun_exp: 2000000
+  gun_exp: 50000000
   gun_level: 0
   damage: 0
   shotgun_spread: 0
@@ -120256,7 +120256,7 @@ MonoBehaviour:
   reload_time: 0
   fire_rate: 0
   clip_size: 0
-  endurance_exp: 2100000
+  endurance_exp: 50000000
   endurance_level: 0
   health: 0
   speed: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
+    public GameObject pushback;
     public int num_souls = 1;
     public float damage;
 
@@ -26,6 +26,11 @@ public class Enemy : MonoBehaviour
         if (num_souls == 1)
         {
             Destroy(gameObject);
+            GameObject o = Instantiate(pushback, transform.position, Quaternion.identity);
+            Utility.instance.WithDelay(.25f, () =>
+                {
+                    Destroy(o);
+                });
             return;
         }
         num_souls /= 2;
@@ -46,6 +51,12 @@ public class Enemy : MonoBehaviour
 
         duplicate.GetComponent<Collider2D>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
+
+        GameObject pb = Instantiate(pushback, transform.position, Quaternion.identity);
+        Utility.instance.WithDelay(.25f, () =>
+            {
+                Destroy(pb);
+            });
 
         Utility.instance.WithDelay(1f, () =>
         {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerAwakeConfig : MonoBehaviour
 {
@@ -19,10 +20,9 @@ public class PlayerAwakeConfig : MonoBehaviour
                 {
                     Animator animation = obj.GetComponent<Animator>();
                     animation.SetBool("death", true);
-                    Utility.instance.WithDelay(.25f, () =>
+                    Utility.instance.WithDelay(.5f, () =>
                     {
-                        Debug.Log("HERE DESTROYING PLAYER");
-                        Destroy(obj);
+                        SceneManager.LoadScene("Game");
                     });
                 };
 

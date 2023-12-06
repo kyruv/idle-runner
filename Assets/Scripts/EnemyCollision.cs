@@ -20,6 +20,29 @@ public class EnemyCollision : MonoBehaviour
             }
         }
 
+        if (collision.collider.CompareTag("pushback"))
+        {
+            Vector2 a = new Vector2(collision.collider.gameObject.transform.position.x, collision.collider.gameObject.transform.position.y) -
+                new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+            float dist = a.magnitude;
+            a.Normalize();
+            a *= 1 / dist;
+
+            gameObject.GetComponent<Collider2D>().enabled = false;
+            gameObject.GetComponent<Rigidbody2D>().AddForce(-100 * a, ForceMode2D.Impulse);
+            gameObject.GetComponent<TargetMovement>().enabled = false;
+
+            Utility.instance.WithDelay(1f, () =>
+            {
+                if (this != null)
+                {
+                    gameObject.GetComponent<Collider2D>().enabled = true;
+                    gameObject.GetComponent<Rigidbody2D>().AddForce(100 * a, ForceMode2D.Impulse);
+                    gameObject.GetComponent<TargetMovement>().enabled = true;
+                }
+            });
+        }
+
         if (collision.collider.CompareTag("bullet"))
         {
             Destroy(collision.gameObject);
