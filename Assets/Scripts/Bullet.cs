@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed = 100;
+    public float damage = .5f;
 
     private Vector3 dir = Vector3.zero;
     private Rigidbody2D rb;
@@ -17,7 +18,6 @@ public class Bullet : MonoBehaviour
     public void SetDir(Vector2 d)
     {
         dir = new Vector3(d.x, d.y, 0);
-        // dir.Normalize();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

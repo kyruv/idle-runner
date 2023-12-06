@@ -11,7 +11,12 @@ public class Utility : MonoBehaviour
         instance = this;
     }
 
-    public IEnumerator WithDelay(float delay, System.Action thing)
+    public void WithDelay(float delay, System.Action thing)
+    {
+        StartCoroutine(WithDelayInternal(delay, thing));
+    }
+
+    private IEnumerator WithDelayInternal(float delay, System.Action thing)
     {
         yield return new WaitForSeconds(delay);
         thing?.Invoke();

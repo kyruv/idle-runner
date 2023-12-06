@@ -9,6 +9,7 @@ public class TargetMovement : MonoBehaviour
     [SerializeField] private GameObject target;
 
     public float speed = 1.75f;
+    public float speed_multiplier = 1f;
 
     void Start()
     {
@@ -24,6 +25,6 @@ public class TargetMovement : MonoBehaviour
     {
         Vector3 diff = target.transform.position - transform.position;
         diff.Normalize();
-        transform.Translate(diff * speed * Time.fixedDeltaTime, Space.World);
+        transform.Translate(diff * speed * speed_multiplier * Time.fixedDeltaTime, Space.World);
     }
 }

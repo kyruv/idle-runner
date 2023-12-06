@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1929545200732176223}
   - component: {fileID: 837275398160246013}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyLocalLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,9 +98,9 @@ GameObject:
   - component: {fileID: 8317762435831567906}
   - component: {fileID: 3467567601100489253}
   - component: {fileID: 2941564976325545518}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,7 +115,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 17.996365, y: 9.085939, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1929545200732176223}
@@ -214,6 +214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 3.5
+  speed_multiplier: 1
 --- !u!58 &8224256435375315829
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -277,6 +278,7 @@ MonoBehaviour:
   max_health: 1
   y_diff: 0
   scale: 2
+  health: 0
 --- !u!114 &2941564976325545518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,3 +291,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ae607ee3c93724d98d313596a01892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  num_souls: 1
+  damage: 0

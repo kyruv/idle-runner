@@ -10,20 +10,20 @@ public class PlayerAwakeConfig : MonoBehaviour
             {
                 Animator animation = obj.GetComponent<Animator>();
                 animation.SetBool("damaged", true);
-                StartCoroutine(Utility.instance.WithDelay(.5f, () =>
+                Utility.instance.WithDelay(.5f, () =>
                 {
                     animation.SetBool("damaged", false);
-                }));
+                });
             };
         System.Action<GameObject> player_death = (obj) =>
                 {
                     Animator animation = obj.GetComponent<Animator>();
                     animation.SetBool("death", true);
-                    StartCoroutine(Utility.instance.WithDelay(.25f, () =>
+                    Utility.instance.WithDelay(.25f, () =>
                     {
                         Debug.Log("HERE DESTROYING PLAYER");
                         Destroy(obj);
-                    }));
+                    });
                 };
 
         Health h = GetComponent<Health>();

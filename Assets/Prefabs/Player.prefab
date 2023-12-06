@@ -185,6 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e0c7173d56104469897cb5055ff77a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoke_prefab: {fileID: 0}
   speed: 4
   dash_speed: 30
   dash_duration: 0.05
@@ -197,7 +198,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5523349679296722300}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
@@ -229,6 +230,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet_prefab: {fileID: 1125996991295596595, guid: 25d58662569f17f4c9e1a2ad3d41551f, type: 3}
+  clipSize: 0
+  fireRate: 0
+  reloadTime: 0
+  damage: 0
+  shotgun_num: 0
+  shotgun_angle: 0
 --- !u!58 &2724899824588770073
 CircleCollider2D:
   m_ObjectHideFlags: 0

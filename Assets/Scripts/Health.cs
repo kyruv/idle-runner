@@ -9,12 +9,12 @@ public class Health : MonoBehaviour
     [SerializeField] private GameObject heath_bar;
 
     [Header("Details")]
-    [SerializeField] private float max_health;
+    [SerializeField] public float max_health;
     [SerializeField] private float y_diff;
     [SerializeField] private float scale = 1;
 
     private SpriteRenderer health_image;
-    private float health;
+    public float health;
     private System.Action<GameObject> on_death_callback;
     private System.Action<GameObject> on_damage_callback;
 
@@ -34,8 +34,11 @@ public class Health : MonoBehaviour
 
     public void SetMaxHealth(float max_health)
     {
+        float old_max_health = this.max_health;
         this.max_health = max_health;
-        this.health = max_health;
+        this.health += (this.max_health - old_max_health);
+        float fill = health / max_health;
+        health_image.size = new Vector2(fill, health_image.size.y);
     }
 
     public void SetDeathCallback(System.Action<GameObject> callback)
@@ -67,6 +70,7 @@ public class Health : MonoBehaviour
         health = new_health;
         float fill = health / max_health;
         health_image.size = new Vector2(fill, health_image.size.y);
+        Debug.Log("HEATH: " + health);
 
         if (health <= 0f)
         {
