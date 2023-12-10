@@ -6,6 +6,8 @@ public class Gun : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject bullet_prefab;
+    [SerializeField] private AmmoDisplay ammoDisplay;
+
 
     [Header("Gun Details")]
     [SerializeField] private int clipSize;
@@ -15,13 +17,13 @@ public class Gun : MonoBehaviour
     [SerializeField] private int shotgun_num;
     [SerializeField] private float shotgun_angle;
 
-    private AmmoDisplay ammoDisplay;
     private int numBullets;
     private float fireTimeout = 0f;
 
+    public bool can_shoot = false;
+
     void Start()
     {
-        ammoDisplay = GameObject.Find("BulletDisplay").GetComponent<AmmoDisplay>();
         ammoDisplay.SetAmmo(clipSize);
         numBullets = clipSize;
     }
@@ -38,19 +40,27 @@ public class Gun : MonoBehaviour
         fireRate = GetComponent<PlayerStats>().fire_rate;
         damage = GetComponent<PlayerStats>().damage;
         reloadTime = GetComponent<PlayerStats>().reload_time;
+        clipSize = GetComponent<PlayerStats>().clip_size;
+        ammoDisplay.SetAmmo(clipSize);
+        numBullets = clipSize;
         Debug.Log("Shotgun: " + shotgun_num);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!can_shoot)
+        {
+            return;
+        }
+
         if (fireTimeout > 0f)
         {
             fireTimeout -= Time.deltaTime;
             return;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             Vector3 mousePosition = Input.mousePosition;
             float zCoordinate = 10f;

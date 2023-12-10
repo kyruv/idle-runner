@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class StatHover : MonoBehaviour
 {
     public GameObject popup;
+    private string hovering = "";
 
     void Start()
     {
@@ -15,8 +16,18 @@ public class StatHover : MonoBehaviour
             popup.SetActive(false);
         }
     }
+
+    public void MaybeUpdateHover(string skill, int xp)
+    {
+        if (skill == hovering)
+        {
+            popup.GetComponentInChildren<TextMeshProUGUI>().text = xp.ToString("N0") + " xp";
+        }
+    }
+
     public void StartHover(string skill)
     {
+        hovering = skill;
         if (popup != null)
         {
             popup.SetActive(true);
@@ -37,6 +48,7 @@ public class StatHover : MonoBehaviour
 
     public void EndHover()
     {
+        hovering = "";
         if (popup != null)
         {
             popup.SetActive(false);

@@ -9,6 +9,8 @@ public class PlayerStats : MonoBehaviour
     public TextMeshProUGUI gunLevel;
     public TextMeshProUGUI dexterityLevel;
     public TextMeshProUGUI enduranceLevel;
+    public GameObject xpDrop;
+    public StatHover statHover;
 
     [Header("Gun")]
     public int gun_exp;
@@ -29,6 +31,8 @@ public class PlayerStats : MonoBehaviour
     public float health;
     public float speed;
     public float dash_cooldown;
+
+    public int darkest_survived = 0;
 
     private List<int> level_breakpoints = new List<int>
         {
@@ -54,20 +58,53 @@ public class PlayerStats : MonoBehaviour
 
     public void AddGunExp(int xp)
     {
+        SpawnXp(xp);
         gun_exp += xp;
         UpdateGun();
+        statHover.MaybeUpdateHover("bullet", gun_exp);
     }
 
     public void AddDexterityExp(int xp)
     {
+        SpawnXp(xp);
         dexterity_exp += xp;
         UpdateDexterity();
+        statHover.MaybeUpdateHover("dexterity", dexterity_exp);
     }
 
     public void AddEduranceExp(int xp)
     {
+        SpawnXp(xp);
         endurance_exp += xp;
         UpdateEdurance();
+        statHover.MaybeUpdateHover("endurance", endurance_exp);
+    }
+
+    public void SpawnXp(int xp)
+    {
+        GameObject o = Instantiate(xpDrop, transform.position, Quaternion.identity);
+        o.GetComponentInChildren<TextMeshProUGUI>().text = "+" + xp;
+        StartCoroutine(MoveAndDestroyCoroutine(o));
+    }
+
+    IEnumerator MoveAndDestroyCoroutine(GameObject o)
+    {
+        // Move the object upward for 1 second
+        float duration = 1.0f;
+        float elapsedTime = 0f;
+        Vector3 initialPosition = o.transform.position;
+        Vector3 targetPosition = initialPosition + 2 * Vector3.up + Vector3.right;
+
+        while (elapsedTime < duration)
+        {
+            o.transform.position = Vector3.Lerp(initialPosition, targetPosition, elapsedTime / duration);
+            o.transform.localScale = Vector3.one * (.5f + ((duration - elapsedTime) / duration));
+            elapsedTime += Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
+
+        // Destroy the object after 1 second
+        Destroy(o);
     }
 
     private void UpdateGun()
@@ -83,7 +120,7 @@ public class PlayerStats : MonoBehaviour
     {
         dexterity_level = GetLevel(dexterity_exp);
         fire_rate = 1.025f - dexterity_level / 100f;
-        reload_time = 2.05f - dexterity_level / 50f;
+        reload_time = 3.05f - dexterity_level / 33f;
         clip_size = 2 + 3 * (dexterity_level / 10);
         GetComponent<Gun>().UpdateDexterityStats();
         UpdateCanvas();
@@ -92,8 +129,8 @@ public class PlayerStats : MonoBehaviour
     private void UpdateEdurance()
     {
         endurance_level = GetLevel(endurance_exp);
-        health = 1 + endurance_level * 3;
-        speed = 1 + endurance_level / 20f;
+        health = 1 + endurance_level * 5;
+        speed = 2f + endurance_level / 20f;
         dash_cooldown = 5.05f - .5f * (endurance_level / 10);
         GetComponent<Health>().SetMaxHealth(health);
         GetComponent<PlayerMovement>().dash_cooldown = dash_cooldown;

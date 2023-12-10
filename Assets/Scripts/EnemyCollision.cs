@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class EnemyCollision : MonoBehaviour
 {
+    private ScreenShake screen_shake;
+
+    void Start()
+    {
+        screen_shake = Camera.main.gameObject.GetComponent<ScreenShake>();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("enemy"))
@@ -53,6 +60,7 @@ public class EnemyCollision : MonoBehaviour
             Enemy us = GetComponent<Enemy>();
             collision.collider.gameObject.GetComponent<Health>().TakeDamage(us.damage);
             us.DamagedPlayer();
+            screen_shake.ShakeScreen();
         }
     }
 }

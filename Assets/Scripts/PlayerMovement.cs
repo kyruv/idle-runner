@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator animator;
-    private float dash_timer = 0f;
+    private float dash_timer = -10f;
     private bool facing_right = true;
 
     void Start()

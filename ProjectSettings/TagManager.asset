@@ -9,6 +9,7 @@ TagManager:
   - map
   - enemy
   - pushback
+  - tent
   layers:
   - Default
   - TransparentFX

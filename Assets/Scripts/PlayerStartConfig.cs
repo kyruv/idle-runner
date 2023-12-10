@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerAwakeConfig : MonoBehaviour
 {
+    public RunManager runManager;
+
     void Start()
     {
         System.Action<GameObject> player_damage = (obj) =>
@@ -22,7 +24,7 @@ public class PlayerAwakeConfig : MonoBehaviour
                     animation.SetBool("death", true);
                     Utility.instance.WithDelay(.5f, () =>
                     {
-                        SceneManager.LoadScene("Game");
+                        runManager.PlayerDied();
                     });
                 };
 

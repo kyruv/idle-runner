@@ -12,12 +12,12 @@ public class Enemy : MonoBehaviour
     public void Consume(Enemy them)
     {
         num_souls += them.num_souls;
-        float scale = Mathf.Min(.4f + (num_souls / 15.0f), 5f);
+        float scale = Mathf.Min(1 + (num_souls / 15.0f), 5f);
         gameObject.transform.localScale = new Vector3(scale, scale, scale);
         Health me = GetComponent<Health>();
         Health themH = them.gameObject.GetComponent<Health>();
         me.SetMaxHealth(me.max_health + 1.25f * themH.health);
-        GetComponent<TargetMovement>().speed_multiplier = Mathf.Min(1f + num_souls / 50f, 4f);
+        GetComponent<TargetMovement>().speed_multiplier = Mathf.Min(1f + (num_souls * num_souls) / 300f, 2.5f);
         Destroy(them.gameObject);
     }
 
@@ -34,8 +34,8 @@ public class Enemy : MonoBehaviour
             return;
         }
         num_souls /= 2;
-        float scale = Mathf.Min(.4f + (num_souls / 15.0f), 5f);
-        GetComponent<TargetMovement>().speed_multiplier = Mathf.Min(1f + num_souls / 50f, 4f);
+        float scale = Mathf.Min(1 + (num_souls / 15.0f), 5f);
+        GetComponent<TargetMovement>().speed_multiplier = Mathf.Min(1f + (num_souls * num_souls) / 300f, 2.5f);
         gameObject.transform.localScale = new Vector3(scale, scale, scale);
         Health me = GetComponent<Health>();
         me.SetMaxHealth(me.max_health / 2);
@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour
             };
 
         Health h = GetComponent<Health>();
-        h.SetColor(Color.yellow);
+        h.SetColor(Color.red);
         h.SetDamageCallback(enemy_damage);
         h.SetDeathCallback(enemy_death);
     }
