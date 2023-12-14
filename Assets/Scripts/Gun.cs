@@ -7,6 +7,7 @@ public class Gun : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject bullet_prefab;
     [SerializeField] private AmmoDisplay ammoDisplay;
+    private AudioSource audioSource;
 
 
     [Header("Gun Details")]
@@ -24,6 +25,7 @@ public class Gun : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         ammoDisplay.SetAmmo(clipSize);
         numBullets = clipSize;
     }

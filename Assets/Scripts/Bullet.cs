@@ -10,9 +10,14 @@ public class Bullet : MonoBehaviour
     private Vector3 dir = Vector3.zero;
     private Rigidbody2D rb;
 
+    private AudioSource audioSource;
+
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
+        audioSource.time = .1f;
+        audioSource.Play();
     }
 
     public void SetDir(Vector2 d)

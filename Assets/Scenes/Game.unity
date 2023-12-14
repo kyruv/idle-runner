@@ -3615,6 +3615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   volume: {fileID: 1979929062}
   player: {fileID: 4302201290174586593}
+  runManager: {fileID: 1089521758}
   full_day: 1
 --- !u!82 &892021413
 AudioSource:
@@ -25291,7 +25292,7 @@ MonoBehaviour:
   selection: {fileID: 1199083736}
   roundResult: {fileID: 806856975}
   level: 1
-  level_time: 60
+  level_time: 15
   enemy_spawn_rate: 1.5
   enemy_spawn_rate_increase: 0.9
   time_till_increase: 0.25
@@ -120846,7 +120847,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0.337
+  weight: 0.405
   sharedProfile: {fileID: 11400000, guid: 3e6ef55279153b441a35a76aceb62e5e, type: 2}
 --- !u!4 &1979929063
 Transform:
@@ -121938,6 +121939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d86ae44aeb4b4408a9d40a02692533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  force_101: 0
   gunLevel: {fileID: 687579168}
   dexterityLevel: {fileID: 526666552}
   enduranceLevel: {fileID: 1769279231}

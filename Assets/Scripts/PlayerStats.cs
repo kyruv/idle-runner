@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.IO;
 
 public class PlayerStats : MonoBehaviour
 {
+    [Header("Top")]
+    public bool force_101 = false;
+
     [Header("References")]
     public TextMeshProUGUI gunLevel;
     public TextMeshProUGUI dexterityLevel;
@@ -34,6 +38,60 @@ public class PlayerStats : MonoBehaviour
 
     public int darkest_survived = 0;
 
+    private string filePath;
+
+    [System.Serializable]
+    public class SavedData
+    {
+        public int level_beaten;
+        public int gun_exp;
+        public int dexterity_exp;
+        public int endurance_exp;
+    }
+
+    private void Awake()
+    {
+        // Define the file path where the save data will be stored
+        if (force_101)
+        {
+            filePath = Application.persistentDataPath + "/101.json";
+        }
+        else
+        {
+            filePath = Application.persistentDataPath + "/saveData.json";
+        }
+    }
+
+    public void SaveGameData(SavedData saveData)
+    {
+        // Convert the SaveData object to a JSON-formatted string
+        string json = JsonUtility.ToJson(saveData);
+
+        // Write the JSON string to a file
+        File.WriteAllText(filePath, json);
+
+        Debug.Log("Game data saved!");
+    }
+
+    public SavedData LoadGameData()
+    {
+        // Check if the file exists
+        if (File.Exists(filePath))
+        {
+            // Read the JSON string from the file
+            string json = File.ReadAllText(filePath);
+
+            // Convert the JSON string to a SaveData object
+            SavedData loadedData = JsonUtility.FromJson<SavedData>(json);
+
+            return loadedData;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     private List<int> level_breakpoints = new List<int>
         {
             100, 107, 115, 123, 132, 141, 151, 162, 174, 186,
@@ -51,9 +109,29 @@ public class PlayerStats : MonoBehaviour
 
     void Start()
     {
+        SavedData data = LoadGameData();
+        if (data != null)
+        {
+            darkest_survived = data.level_beaten;
+            dexterity_exp = data.dexterity_exp;
+            endurance_exp = data.endurance_exp;
+            gun_exp = data.gun_exp;
+        }
+
         UpdateGun();
         UpdateDexterity();
         UpdateEdurance();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SavedData d = new SavedData();
+        d.endurance_exp = endurance_exp;
+        d.dexterity_exp = dexterity_exp;
+        d.gun_exp = gun_exp;
+        d.level_beaten = darkest_survived;
+
+        SaveGameData(d);
     }
 
     public void AddGunExp(int xp)
@@ -130,7 +208,7 @@ public class PlayerStats : MonoBehaviour
     {
         endurance_level = GetLevel(endurance_exp);
         health = 1 + endurance_level * 5;
-        speed = 2f + endurance_level / 20f;
+        speed = 3f + endurance_level / 20f;
         dash_cooldown = 5.05f - .5f * (endurance_level / 10);
         GetComponent<Health>().SetMaxHealth(health);
         GetComponent<PlayerMovement>().dash_cooldown = dash_cooldown;

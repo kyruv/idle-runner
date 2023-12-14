@@ -59,6 +59,11 @@ public class RunManager : MonoBehaviour
         SetLevel(level);
     }
 
+    public int GetLevel()
+    {
+        return level;
+    }
+
     public void PlayerDied()
     {
         in_run = false;
@@ -78,6 +83,7 @@ public class RunManager : MonoBehaviour
         roundResult.enabled = true;
         roundResult.text = "You Died";
         roundResult.color = Color.red;
+        player.transform.position = new Vector3(16, 8, 0);
 
         Utility.instance.WithDelay(2.5f, () =>
         {
@@ -95,7 +101,7 @@ public class RunManager : MonoBehaviour
         time_till_increase = 5f - 4.5f * (999f - level) / 999f;
         base_enemy_health = 1 + level / 2f;
         enemy_damage = 1f + level / 5f;
-        enemy_speed = 2f + 7.5f * level / 999f;
+        enemy_speed = 3f + 7.5f * level / 999f;
         level_timer = 0;
     }
 
@@ -138,6 +144,7 @@ public class RunManager : MonoBehaviour
             roundResult.enabled = true;
             roundResult.text = "You Lived";
             roundResult.color = new Color(50f / 255, 150f / 255, 25f / 255);
+            player.transform.position = new Vector3(16, 8, 0);
 
             Utility.instance.WithDelay(2.5f, () =>
             {

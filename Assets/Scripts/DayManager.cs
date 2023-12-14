@@ -10,6 +10,7 @@ public class DayManager : MonoBehaviour
     [SerializeField] private Volume volume;
     [SerializeField] private GameObject player;
     private PlayerStats playerStats;
+    [SerializeField] private RunManager runManager;
 
     private Light2D[] lights;
 
@@ -63,15 +64,15 @@ public class DayManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            playerStats.AddGunExp(Random.Range(10, 30));
+            playerStats.AddGunExp(runManager.GetLevel() * Random.Range(10, 30));
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            playerStats.AddDexterityExp(Random.Range(10, 30));
+            playerStats.AddDexterityExp(runManager.GetLevel() * Random.Range(10, 30));
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            playerStats.AddEduranceExp(Random.Range(10, 30));
+            playerStats.AddEduranceExp(runManager.GetLevel() * Random.Range(10, 30));
         }
     }
 }
